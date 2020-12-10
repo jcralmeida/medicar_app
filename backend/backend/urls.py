@@ -21,5 +21,6 @@ from medicar_api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('especialidades/$', views.get_specialty)
+    url('especialidades/$', views.get_specialty),
+    url('medicos/$', views.get_doctors)
 ]
