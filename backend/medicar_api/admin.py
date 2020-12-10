@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from medicar_api.models import Specialty
+from medicar_api.models import Specialty, Doctor
 
 admin.site.register(Specialty)
+admin.site.register(Doctor)
