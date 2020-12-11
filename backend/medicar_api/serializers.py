@@ -23,3 +23,15 @@ class DoctorSerializer(serializers.ModelSerializer):
         model = models.Doctor
         fields = ['id', 'name', 'crm', 'email', 'phone', 'specialty']
 
+
+class ScheduleSerializer(serializers.ModelSerializer):
+    """
+    Responsible to serializer an object to Json or vice-versa.
+    """
+    doctor = DoctorSerializer(many=False, read_only=True)
+    time = serializers.ListField(child=serializers.TimeField(format='%H:%M'))
+
+    class Meta:
+        model = models.Schedule
+        fields = ['id', 'doctor', 'date', 'time']
+
