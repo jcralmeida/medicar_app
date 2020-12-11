@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 
-from medicar_api.models import Specialty, Doctor
-from medicar_api.serializers import SpecialtySerializer, DoctorSerializer
+from medicar_api.models import Specialty, Doctor, Schedule
+from medicar_api.serializers import SpecialtySerializer, DoctorSerializer, ScheduleSerializer
 from medicar_api.utils import prepare_response
 
 
@@ -39,6 +39,23 @@ def get_doctors(request):
     retrieved_specialty = Doctor.objects.filter().all()
 
     serialized_specialty = DoctorSerializer(retrieved_specialty, many=True)
+
+    json_response = prepare_response(serialized_specialty)
+    return json_response
+
+
+@api_view(['GET'])
+def get_doctors_schedule(request):
+    """
+    Get the schedule for a specific doctor that has been already registered.
+
+    :param request: the request received from the user.
+    :return: A response in a json format.
+    """
+
+    retrieved_schedule = Schedule.objects.filter().all()
+
+    serialized_specialty = ScheduleSerializer(retrieved_schedule, many=True)
 
     json_response = prepare_response(serialized_specialty)
     return json_response
