@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 # Create your models here.
@@ -12,6 +13,7 @@ class Specialty(models.Model):
     class Meta:
         db_table = 'specialty'
 
+
 class Doctor(models.Model):
     """
     The Doctor class represents the model for the Doctor table.
@@ -24,3 +26,16 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Schedule(models.Model):
+    """
+    The Schedule class represents the model for the Schedule table.
+    """
+
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=False, auto_now_add=False)
+    time = ArrayField(models.TimeField(auto_now=False))
+
+    class Meta:
+        db_table = 'schedule'
