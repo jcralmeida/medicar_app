@@ -4,7 +4,8 @@ from medicar_api.exceptions import InvalidHours, InvalidDay, HourUnavailable, No
 from medicar_api.models import Schedule, Appointments
 
 
-def validate_hour(request_dict: dict, now: str):
+def validate_hour(request_dict: dict, now: str,
+                  retrieved_schedule: Schedule, date_now: date):
     """
     Validate if the client is not trying to set an appointment to a past hour.
 
@@ -13,7 +14,10 @@ def validate_hour(request_dict: dict, now: str):
     :param now: the hour that the client is trying to set the appointment
     :type now: str
     """
-    if request_dict.get("horario") < now:
+    valid_day = retrieved_schedule.dia < date_now
+    valid_hour = request_dict.get("horario") < now
+
+    if not valid_day and not valid_hour:
         raise InvalidHours
 
 
