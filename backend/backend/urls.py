@@ -24,5 +24,6 @@ urlpatterns = [
     url('especialidades/$', views.get_specialty),
     url('medicos/$', views.get_doctors),
     url('agendas/$', views.get_doctors_schedule),
-    url('consultas/$', views.make_appointment)
+    url('consultas/$', views.make_appointment),
+    path('consultas/<int:consulta_id>/', views.delete_appointment)
 ]
