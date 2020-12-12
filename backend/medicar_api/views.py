@@ -1,12 +1,15 @@
 from datetime import datetime, date
 
+from django.http import JsonResponse
 from pytz import timezone
+from rest_framework import status
 from rest_framework.decorators import api_view
 
 from medicar_api.models import Specialty, Doctor, Schedule, Appointments
 from medicar_api.serializers import SpecialtySerializer, DoctorSerializer, ScheduleSerializer, AppointmentSerializer
 from medicar_api.utils import prepare_response
-from medicar_api.validations import validate_hour, validate_day, validate_appointment_available
+from medicar_api.validations import validate_hour, validate_day, validate_appointment_available, \
+    validate_non_existence_appointment
 
 
 @api_view(['GET'])
@@ -68,7 +71,7 @@ def get_doctors_schedule(request):
 @api_view(['POST'])
 def make_appointment(request):
     """
-    Create a appointment for a specific doctor on a specific day and date
+    Create an appointment for a specific doctor on a specific day and date
 
     :param request: the request received from the user.
     :return: A response in a json format.
@@ -114,3 +117,31 @@ def make_appointment(request):
     json_response = prepare_response(appointment_serializer)
 
     return json_response
+
+
+@api_view(['DELETE'])
+def delete_appointment(request, consulta_id):
+    """
+    Delete an appointment that has been scheduled before.
+
+    :param request: the request received from the user.
+    :type request: WSGIRequest
+    :param consulta_id: the appointment identifier
+    :type consulta_id: int
+
+    :return: A response in a json format.
+    """
+
+    retrieved_appointment = Appointments.objects.filter(
+        id=consulta_id
+    ).first()
+
+    validate_non_existence_appointment(retrieved_appointment=retrieved_appointment)
+
+    retrieved_appointment.delete()
+
+    return JsonResponse(
+        {},
+        safe=False,
+        status=status.HTTP_204_NO_CONTENT
+    )
