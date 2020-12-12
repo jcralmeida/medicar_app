@@ -27,6 +27,7 @@ urlpatterns = [
     url('medicos/$', views.get_doctors),
     url('agendas/$', views.get_doctors_schedule),
     url('consultas/$', views.make_appointment),
+    url('consultas', views.get_appointment),
     url('login/', obtain_jwt_token),
     url('refresh_token', refresh_jwt_token)
 ]
