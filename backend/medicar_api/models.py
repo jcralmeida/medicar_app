@@ -40,3 +40,17 @@ class Schedule(models.Model):
 
     class Meta:
         db_table = 'schedule'
+
+
+class Appointments(models.Model):
+    """
+    The Appointments class represents the model for the Appointments table.
+    """
+
+    medico = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    dia = models.DateField(auto_now=False, auto_now_add=False)
+    hora = models.TimeField(auto_now=False, auto_now_add=False)
+    data_agendamento =models.DateField()
+
+    class Meta:
+        db_table = 'Appointments'
