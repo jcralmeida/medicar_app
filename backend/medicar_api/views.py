@@ -1,8 +1,12 @@
+from datetime import datetime, date
+
+from pytz import timezone
 from rest_framework.decorators import api_view
 
-from medicar_api.models import Specialty, Doctor, Schedule
-from medicar_api.serializers import SpecialtySerializer, DoctorSerializer, ScheduleSerializer
+from medicar_api.models import Specialty, Doctor, Schedule, Appointments
+from medicar_api.serializers import SpecialtySerializer, DoctorSerializer, ScheduleSerializer, AppointmentSerializer
 from medicar_api.utils import prepare_response
+from medicar_api.validations import validate_hour, validate_day, validate_appointment_available
 
 
 @api_view(['GET'])
@@ -14,7 +18,7 @@ def get_specialty(request):
     :return: A response in a json format.
     """
 
-    specialty_name_filter = request.query_params.get("name")
+    specialty_name_filter = request.query_params.get("nome")
 
     if(specialty_name_filter):
         retrieved_specialty = Specialty.objects.filter(name=specialty_name_filter).all()
@@ -58,4 +62,55 @@ def get_doctors_schedule(request):
     serialized_specialty = ScheduleSerializer(retrieved_schedule, many=True)
 
     json_response = prepare_response(serialized_specialty)
+    return json_response
+
+
+@api_view(['POST'])
+def make_appointment(request):
+    """
+    Create a appointment for a specific doctor on a specific day and date
+
+    :param request: the request received from the user.
+    :return: A response in a json format.
+    """
+
+    request_dict = request.data
+
+    retrieved_schedule = Schedule.objects.filter(id=request_dict.get("agenda_id")).first()
+
+    today_date = date.today()
+
+    fuso_horario = timezone('America/Sao_Paulo')
+    now = datetime.now(fuso_horario).strftime('%H:%M')
+
+    validate_hour(
+        request_dict=request_dict,
+        now=now
+    )
+
+    validate_day(
+        retrieved_schedule=retrieved_schedule,
+        date_now=today_date
+    )
+
+    retrieved_appointment = Appointments.objects.filter(
+        hora=request_dict.get('horario'),
+        dia=retrieved_schedule.dia
+    ).first()
+
+    validate_appointment_available(retrieved_appointment=retrieved_appointment)
+
+    create = Appointments.objects.create(
+        dia=retrieved_schedule.dia,
+        hora=request_dict.get("horario"),
+        medico=retrieved_schedule.medico,
+        data_agendamento=today_date
+    )
+
+    create.save()
+
+    appointment_serializer = AppointmentSerializer(create, many=False)
+
+    json_response = prepare_response(appointment_serializer)
+
     return json_response
