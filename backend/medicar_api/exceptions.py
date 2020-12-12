@@ -27,3 +27,13 @@ class HourUnavailable(APIException):
     status_code = 400
     default_detail = 'Este horário não está disponivel. Por favor, escolha outro'
     default_code = 'Bad Request'
+
+
+class NonExistenceAppointment(APIException):
+    """
+    Exception raised when the client tries to set an appointment in an hour that
+    has already been taken.
+    """
+    status_code = 404
+    default_detail = 'Você não pode deletar uma consulta que não foi marcada ainda.'
+    default_code = 'Bad Request'
