@@ -17,3 +17,14 @@ def validate_hour(request_dict: dict, now: str):
         raise InvalidHours
 
 
+def validate_day(retrieved_schedule: Schedule, date_now: date):
+    """
+    Validate if the client is not trying to set an appointment to a past day.
+
+    :param retrieved_schedule: a Schedule object
+    :type retrieved_schedule: Schedule
+    :param date_now: the hour that the client is trying to set the appointment
+    :type date_now: date
+    """
+    if retrieved_schedule.dia < date_now:
+        raise InvalidDay
