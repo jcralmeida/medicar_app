@@ -17,21 +17,32 @@ class DoctorSerializer(serializers.ModelSerializer):
     Responsible to serializer an object to Json or vice-versa.
     """
 
-    specialty = SpecialtySerializer(many=False, read_only=True)
+    especialidade = SpecialtySerializer(many=False, read_only=True)
 
     class Meta:
         model = models.Doctor
-        fields = ['id', 'name', 'crm', 'email', 'phone', 'specialty']
+        fields = ['id', 'nome', 'crm', 'email', 'telefone', 'especialidade']
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
     """
     Responsible to serializer an object to Json or vice-versa.
     """
-    doctor = DoctorSerializer(many=False, read_only=True)
-    time = serializers.ListField(child=serializers.TimeField(format='%H:%M'))
+    medico = DoctorSerializer(many=False, read_only=True)
+    horario = serializers.ListField(child=serializers.TimeField(format='%H:%M'))
 
     class Meta:
         model = models.Schedule
-        fields = ['id', 'doctor', 'date', 'time']
+        fields = ['id', 'medico', 'dia', 'horario']
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    """
+
+    """
+    medico = DoctorSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = models.Appointments
+        fields = ['id', 'hora', 'dia', 'data_agendamento', 'medico']
 
