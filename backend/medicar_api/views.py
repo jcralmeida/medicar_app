@@ -119,6 +119,29 @@ def make_appointment(request):
     return json_response
 
 
+@api_view(['GET'])
+def get_appointment(request):
+    """
+    Get an appointment for a specific doctor on a specific day and date
+
+    :param request: the request received from the user.
+    :return: A response in a json format.
+    """
+
+    user_id = request.user.id
+
+    today_date = date.today()
+
+    retrieved_schedule = Appointments.objects\
+        .filter(dia__gte=today_date, agendador_por=user_id).all()\
+        .order_by('dia')
+
+    appointment_serializer = AppointmentSerializer(retrieved_schedule, many=True)
+
+    return prepare_list_response(appointment_serializer, status.HTTP_200_OK)
+
+
+
 @api_view(['DELETE'])
 def delete_appointment(request, consulta_id):
     """
