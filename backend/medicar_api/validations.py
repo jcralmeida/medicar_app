@@ -1,6 +1,6 @@
 from datetime import date
 
-from medicar_api.exceptions import InvalidHours, InvalidDay, HourUnavailable
+from medicar_api.exceptions import InvalidHours, InvalidDay, HourUnavailable, NonExistenceAppointment
 from medicar_api.models import Schedule, Appointments
 
 
@@ -39,3 +39,14 @@ def validate_appointment_available(retrieved_appointment: Appointments):
     """
     if retrieved_appointment is not None:
         raise HourUnavailable
+
+
+def validate_non_existence_appointment(retrieved_appointment: Appointments):
+    """
+    Validate if the client is not trying delete an appointment that hadn't been created yet.
+
+    :param retrieved_appointment: a Appointment object
+    :type retrieved_appointment: Appointments
+    """
+    if retrieved_appointment is None:
+        raise NonExistenceAppointment
