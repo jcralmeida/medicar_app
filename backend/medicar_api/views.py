@@ -30,8 +30,7 @@ def get_specialty(request):
 
     serialized_specialty = SpecialtySerializer(retrieved_specialty, many=True)
 
-    json_response = prepare_response(serialized_specialty)
-    return json_response
+    return prepare_list_response(serialized_specialty, status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -47,8 +46,8 @@ def get_doctors(request):
 
     serialized_specialty = DoctorSerializer(retrieved_specialty, many=True)
 
-    json_response = prepare_response(serialized_specialty)
-    return json_response
+    return prepare_list_response(serialized_specialty, status.HTTP_200_OK)
+
 
 
 @api_view(['GET'])
@@ -64,8 +63,7 @@ def get_doctors_schedule(request):
 
     serialized_specialty = ScheduleSerializer(retrieved_schedule, many=True)
 
-    json_response = prepare_response(serialized_specialty)
-    return json_response
+    return prepare_list_response(serialized_specialty, status.HTTP_200_OK)
 
 
 @api_view(['POST'])
