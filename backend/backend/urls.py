@@ -16,14 +16,17 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from medicar_api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('consultas/<int:consulta_id>/', views.delete_appointment),
     url('especialidades/$', views.get_specialty),
     url('medicos/$', views.get_doctors),
     url('agendas/$', views.get_doctors_schedule),
     url('consultas/$', views.make_appointment),
-    path('consultas/<int:consulta_id>/', views.delete_appointment)
+    url('login/', obtain_jwt_token),
+    url('refresh_token', refresh_jwt_token)
 ]
