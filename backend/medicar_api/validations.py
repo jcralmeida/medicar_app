@@ -28,3 +28,14 @@ def validate_day(retrieved_schedule: Schedule, date_now: date):
     """
     if retrieved_schedule.dia < date_now:
         raise InvalidDay
+
+
+def validate_appointment_available(retrieved_appointment: Appointments):
+    """
+    Validate if the client is not trying to set an appointment on a taken hour.
+
+    :param retrieved_appointment: a Appointment object
+    :type retrieved_appointment: Appointments
+    """
+    if retrieved_appointment is not None:
+        raise HourUnavailable
