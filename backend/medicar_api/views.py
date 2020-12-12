@@ -1,5 +1,6 @@
 from datetime import datetime, date
 
+from django.db.models import Q
 from django.http import JsonResponse
 from pytz import timezone
 from rest_framework import status
@@ -7,7 +8,7 @@ from rest_framework.decorators import api_view
 
 from medicar_api.models import Specialty, Doctor, Schedule, Appointments
 from medicar_api.serializers import SpecialtySerializer, DoctorSerializer, ScheduleSerializer, AppointmentSerializer
-from medicar_api.utils import prepare_response
+from medicar_api.utils import prepare_response, prepare_list_response, prepare_doctor_query_parameters
 from medicar_api.validations import validate_hour, validate_day, validate_appointment_available, \
     validate_non_existence_appointment
 
@@ -42,7 +43,9 @@ def get_doctors(request):
     :return: A response in a json format.
     """
 
-    retrieved_specialty = Doctor.objects.filter().all()
+    query_params_dict = prepare_doctor_query_parameters(request)
+
+    retrieved_specialty = Doctor.objects.filter(**query_params_dict).all()
 
     serialized_specialty = DoctorSerializer(retrieved_specialty, many=True)
 
@@ -58,8 +61,9 @@ def get_doctors_schedule(request):
     :param request: the request received from the user.
     :return: A response in a json format.
     """
+    today_date = date.today()
 
-    retrieved_schedule = Schedule.objects.filter().all()
+    retrieved_schedule = Schedule.objects.filter(dia__gte=today_date).all().order_by('dia')
 
     serialized_specialty = ScheduleSerializer(retrieved_schedule, many=True)
 
@@ -76,6 +80,7 @@ def make_appointment(request):
     """
 
     request_dict = request.data
+    user_id = request.user.id
 
     retrieved_schedule = Schedule.objects.filter(id=request_dict.get("agenda_id")).first()
 
@@ -86,7 +91,9 @@ def make_appointment(request):
 
     validate_hour(
         request_dict=request_dict,
-        now=now
+        now=now,
+        retrieved_schedule=retrieved_schedule,
+        date_now=today_date
     )
 
     validate_day(
@@ -94,9 +101,11 @@ def make_appointment(request):
         date_now=today_date
     )
 
-    retrieved_appointment = Appointments.objects.filter(
+    retrieved_appointment = Appointments.objects.filter(Q(
         hora=request_dict.get('horario'),
-        dia=retrieved_schedule.dia
+        dia=retrieved_schedule.dia,
+        agendador_por=user_id) | Q(hora=request_dict.get('horario'),
+        dia=retrieved_schedule.dia,)
     ).first()
 
     validate_appointment_available(retrieved_appointment=retrieved_appointment)
@@ -105,7 +114,8 @@ def make_appointment(request):
         dia=retrieved_schedule.dia,
         hora=request_dict.get("horario"),
         medico=retrieved_schedule.medico,
-        data_agendamento=today_date
+        data_agendamento=today_date,
+        agendador_por=user_id
     )
 
     create.save()
