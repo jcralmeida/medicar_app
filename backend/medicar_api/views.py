@@ -22,12 +22,13 @@ def get_specialty(request):
     :return: A response in a json format.
     """
 
-    specialty_name_filter = request.query_params.get("nome")
+    query_parameters_dict = dict()
+    specialty_name_filter = request.query_params.get('search')
 
     if(specialty_name_filter):
-        retrieved_specialty = Specialty.objects.filter(name=specialty_name_filter).all()
-    else:
-        retrieved_specialty = Specialty.objects.filter().all()
+        query_parameters_dict['nome'] = specialty_name_filter
+
+    retrieved_specialty = Specialty.objects.filter(**query_parameters_dict).all()
 
     serialized_specialty = SpecialtySerializer(retrieved_specialty, many=True)
 
@@ -63,7 +64,9 @@ def get_doctors_schedule(request):
     """
     today_date = date.today()
 
-    retrieved_schedule = Schedule.objects.filter(dia__gte=today_date).all().order_by('dia')
+    retrieved_schedule = Schedule.objects.filter(
+        dia__gte=today_date).filter(
+        **request.query_params.dict()).all().order_by('dia')
 
     serialized_specialty = ScheduleSerializer(retrieved_schedule, many=True)
 
