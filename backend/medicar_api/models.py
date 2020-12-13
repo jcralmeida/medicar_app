@@ -51,6 +51,7 @@ class Appointments(models.Model):
     dia = models.DateField(auto_now=False, auto_now_add=False)
     hora = models.TimeField(auto_now=False, auto_now_add=False)
     data_agendamento =models.DateField()
+    agendador_por = models.IntegerField()
 
     class Meta:
         db_table = 'Appointments'
