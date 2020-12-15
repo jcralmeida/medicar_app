@@ -5,7 +5,7 @@
       src="../../../assets/logo.png"
     />
     <h1 id="register-title">Crie sua conta</h1>
-    <form>
+    <form #f="ngForm" (ngSubmit)="onRegister(f.value)" >
       <div class="form-group">
         <input
           placeholder="Nome"
