@@ -33,6 +33,9 @@
           #password="ngModel"
           minlength="6"
         />
+        <div class="alert alert-danger" *ngIf="password.touched && !password.valid ">
+          <div *ngIf="password.errors.required">Password is required.</div>
+        </div>
       </div>
       <div class="forget-pass-checkbox">
         <input
