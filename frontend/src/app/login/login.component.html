@@ -6,6 +6,7 @@
     />
     <h1 id="register-title">Crie sua conta</h1>
     <form>
+    <form #f="ngForm" (ngSubmit)="onLogin(f.value)">
       <div class="form-group">
         <input
           placeholder="Email ou login"
