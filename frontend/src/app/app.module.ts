@@ -9,13 +9,15 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import {  HttpClientModule } from '@angular/common/http';
 import { ValidateEqualModule } from 'ng-validate-equal';
+import { ListAppointmentsComponent } from './list-appointments/list-appointments.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ListAppointmentsComponent
   ],
   imports: [
     BrowserModule,
