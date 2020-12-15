@@ -13,6 +13,10 @@
   margin: 0 auto
 }
 
+.form-control.ng-touched.ng-invalid {
+  border: 2px solid red;
+}
+
 .btn-group {
   margin-top: 20px;
   width: 400px;
