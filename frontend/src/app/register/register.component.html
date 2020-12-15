@@ -13,6 +13,8 @@
           class="form-control"
           name="username"
           required
+          ngModel
+          #username="ngModel"
           minlength="3"
           maxlength="20"/>
       </div>
@@ -22,6 +24,8 @@
           type="email"
           class="form-control"
           name="email"
+          #email="ngModel"
+          ngModel
           required
         />
       </div>
@@ -30,8 +34,10 @@
           placeholder="Senha"
           type="password"
           class="form-control"
-          name="password1"
+          name="password"
+          ngModel
           required
+          #password="ngModel"
           minlength="6"
         />
       </div>
@@ -40,8 +46,10 @@
           placeholder="Confirmar senha"
           type="password"
           class="form-control"
-          name="password2"
+          name="repeatedPassword"
           required
+          #repeatPassword="ngModel"
+          ngModel
           minlength="6"
         />
       </div>
