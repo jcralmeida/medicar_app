@@ -29,6 +29,7 @@ def register_user(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_specialty(request):
     """
     Get the specialty that has been already registered.
@@ -51,6 +52,7 @@ def get_specialty(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_doctors(request):
     """
     Get the doctor that has been already registered.
@@ -68,8 +70,8 @@ def get_doctors(request):
     return prepare_list_response(serialized_specialty, status.HTTP_200_OK)
 
 
-
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_doctors_schedule(request):
     """
     Get the schedule for a specific doctor that has been already registered.
@@ -89,6 +91,7 @@ def get_doctors_schedule(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def make_appointment(request):
     """
     Create an appointment for a specific doctor on a specific day and date
@@ -146,6 +149,7 @@ def make_appointment(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_appointment(request):
     """
     Get an appointment for a specific doctor on a specific day and date
@@ -168,6 +172,7 @@ def get_appointment(request):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_appointment(request, consulta_id):
     """
     Delete an appointment that has been scheduled before.
