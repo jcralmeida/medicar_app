@@ -20,6 +20,7 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from medicar_api import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('consultas/<int:consulta_id>/', views.delete_appointment),
@@ -29,5 +30,6 @@ urlpatterns = [
     url('consultas/$', views.make_appointment),
     url('consultas', views.get_appointment),
     url('login/', obtain_jwt_token),
-    url('refresh_token', refresh_jwt_token)
+    url('refresh_token', refresh_jwt_token),
+    url(r'registration', views.register_user)
 ]

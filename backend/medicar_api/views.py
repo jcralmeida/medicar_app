@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from pytz import timezone
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 
 from medicar_api.models import Specialty, Doctor, Schedule, Appointments
 from medicar_api.serializers import SpecialtySerializer, DoctorSerializer, ScheduleSerializer, AppointmentSerializer
@@ -12,8 +12,24 @@ from medicar_api.utils import prepare_response, prepare_list_response, prepare_d
 from medicar_api.validations import validate_hour, validate_day, validate_appointment_available, \
     validate_non_existence_appointment
 
+from medicar_api.serializers import UserSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_user(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        if user:
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+
+    return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_specialty(request):
     """
     Get the specialty that has been already registered.
@@ -36,6 +52,7 @@ def get_specialty(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_doctors(request):
     """
     Get the doctor that has been already registered.
@@ -53,8 +70,8 @@ def get_doctors(request):
     return prepare_list_response(serialized_specialty, status.HTTP_200_OK)
 
 
-
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_doctors_schedule(request):
     """
     Get the schedule for a specific doctor that has been already registered.
@@ -74,6 +91,7 @@ def get_doctors_schedule(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def make_appointment(request):
     """
     Create an appointment for a specific doctor on a specific day and date
@@ -131,6 +149,7 @@ def make_appointment(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_appointment(request):
     """
     Get an appointment for a specific doctor on a specific day and date
@@ -152,8 +171,8 @@ def get_appointment(request):
     return prepare_list_response(appointment_serializer, status.HTTP_200_OK)
 
 
-
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_appointment(request, consulta_id):
     """
     Delete an appointment that has been scheduled before.
