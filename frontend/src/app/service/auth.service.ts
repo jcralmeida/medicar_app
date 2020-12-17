@@ -20,9 +20,8 @@ export class AuthService {
     return this.httpClient.post('http://localhost:8000/registration/', {
       username: user.username,
       email: user.email,
-      password: user.password1,
-      repeatedPassword: user.password2
-    })
+      password: user.password,
+    });
   }
 
   logout(): void {
