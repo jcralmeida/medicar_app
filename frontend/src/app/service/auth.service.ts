@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
     return this.httpClient.post('http://localhost:8000/login/', {
       username: credentials.username,
       password: credentials.password
-    })
+    });
   }
 
   register(user): Observable<any> {
