@@ -64,7 +64,7 @@
 }
 
 #table-title {
-    
+
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
@@ -81,13 +81,13 @@
     background: #49B4BB;
     border-radius: 4px;
     padding-right: 15px;
-    margin: 20px 10px 20px 0px;   
+    margin: 20px 10px 20px 0px;
     width: 160px;
     height: 30px;
 
     color: #FFF;
     border: none;
-    
+
 }
 
 
@@ -115,4 +115,39 @@ th {
 #btnDesmarcar {
     color: #49B4BB;
     width: 150px;
+}
+
+.form-group {
+  padding: 20px 40px;
+}
+
+.btn-create {
+  background-color: #49B4BB;
+  color: #FFF;
+  width: 180px;
+  height: 40px;
+}
+
+.btn-create:hover {
+  background-color: #90D3D7;
+  transition: 0.4s;
+}
+
+.btn-cancelar:hover {
+  outline-style: solid;
+  outline-color: #49B4BB;
+
+}
+
+.btn-group {
+  margin-top: 20px;
+  padding: 10px;
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-consulta{
+  width: 480px;
+  padding: 20px;
 }
