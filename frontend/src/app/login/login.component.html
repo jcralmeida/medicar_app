@@ -1,0 +1,63 @@
+<app-spinner *ngIf="showSpinner"></app-spinner>
+<div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="logo"
+      src="../../../assets/logo.png"
+    />
+    <form #f="ngForm" (ngSubmit)="onLogin(f.value)">
+      <div class="form-group">
+        <input
+          placeholder="Email ou login"
+          type="text"
+          class="form-control"
+          name="username"
+          required
+          ngModel
+          #username="ngModel"
+          minlength="3"
+          maxlength="40"/>
+          <div class="alert alert-danger" *ngIf="username.touched && !username.valid ">
+            <div *ngIf="username.errors.required">É necessário passar um username.</div>
+            <div *ngIf="username.errors.minlength">Username deve ter no minimo 3 caracteres.</div>
+          </div>
+      </div>
+      <div class="form-group">
+        <input
+          placeholder="Senha"
+          type="password"
+          class="form-control"
+          name="password"
+          required
+          ngModel
+          #password="ngModel"
+          minlength="6"
+        />
+        <div class="alert alert-danger" *ngIf="password.touched && !password.valid ">
+          <div *ngIf="password.errors.required">Password is required.</div>
+        </div>
+      </div>
+      <div class="forget-pass-checkbox">
+        <input
+          type="checkbox"
+          id="forget-pass"
+          name="forget-pass"
+          value="Bike">
+        <label class= "forget-pass-label"
+               for="forget-pass"
+        >Lembrar minha senha
+        </label>
+      </div>
+      <div class="btn-group">
+        <a href="/login" class="btn button btn-sign-up">
+          Cancelar
+        </a>
+        <div class="form-group">
+          <button id="acessar-btn" class="btn button btn-sign-in">
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

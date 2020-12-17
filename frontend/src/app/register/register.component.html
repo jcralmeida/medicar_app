@@ -1,0 +1,86 @@
+<app-spinner *ngIf="showSpinner"></app-spinner>
+<div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="logo"
+      src="../../../assets/logo.png"
+    />
+    <h1 id="register-title">Crie sua conta</h1>
+    <form #f="ngForm" (ngSubmit)="onRegister(f.value)" >
+      <div class="form-group">
+        <input
+          placeholder="Nome"
+          type="text"
+          class="form-control"
+          name="username"
+          required
+          ngModel
+          #username="ngModel"
+          minlength="3"
+          maxlength="20"/>
+          <div class="alert alert-danger" *ngIf="username.touched && !username.valid ">
+            <div *ngIf="username.errors.required">O campo username é obrigatório.</div>
+            <div *ngIf="username.errors.minlength">Username deve ter no minimo 3 caracteres.</div>
+          </div>
+      </div>
+      <div class="form-group">
+        <input
+          placeholder="Email"
+          type="email"
+          class="form-control"
+          name="email"
+          #email="ngModel"
+          ngModel
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          required
+        />
+        <div class="alert alert-danger" *ngIf="email.touched && !email.valid ">
+          <div *ngIf="email.errors.required">O campo email é obrigatório.</div>
+          <div *ngIf="email.errors.pattern">O campo email não é valido.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          placeholder="Senha"
+          type="password"
+          class="form-control"
+          name="password"
+          ngModel
+          required
+          #password="ngModel"
+          minlength="6"
+        />
+        <div class="alert alert-danger" *ngIf="password.touched && !password.valid ">
+          <div *ngIf="password.errors.required">O campo é obrigatório.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          placeholder="Confirmar senha"
+          type="password"
+          class="form-control"
+          name="repeatedPassword"
+          required
+          #repeatPassword="ngModel"
+          ngModel
+          minlength="6"
+          ngValidateEqual="password"
+        />
+        <div class="alert alert-danger" *ngIf="repeatPassword.touched && !repeatPassword.valid ">
+          <div *ngIf="repeatPassword.errors.required">O campo é obrigatório.</div>
+          <div *ngIf="repeatPassword.hasError('notEqual')">O campo password não é igual.</div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <a href="/login" class="btn button btn-cancelar">
+          Cancelar
+        </a>
+        <div class="form-group">
+          <button id="acessar-btn" class="btn button btn-confirmar">
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+#logo {
+  position: relative;
+  display: block;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  margin-left: 0px;
+  width: 180.74px;
+  height: 50px;
+}
+
+.card-container {
+  width: 50%;
+  margin: 0 auto
+}
+
+.btn-group {
+  margin-top: 20px;
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forget-pass-checkbox {
+  display: block;
+  margin-right: 10px;
+}
+
+.forget-pass-label{
+  margin: auto 10px;
+}
+
+.btn-sign-up {
+  background-color: #fff;
+  color: #49B4BB;
+  width: 180px;
+  height: 40px;
+  margin-right: 40px;
+}
+
+.btn-sign-up:hover {
+  outline-style: solid;
+  outline-color: #49B4BB;
+
+}
+
+.btn-sign-in {
+  background-color: #49B4BB;
+  color: #FFF;
+  width: 180px;
+  height: 40px;
+}
+
+.btn-sign-in:hover {
+  background-color: #90D3D7;
+  transition: 0.4s;
+}
