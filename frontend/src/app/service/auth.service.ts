@@ -24,4 +24,9 @@ export class AuthService {
       repeatedPassword: user.password2
     })
   }
+
+  logout(): void {
+   localStorage.setItem('isLoggedIn', 'false');
+   localStorage.removeItem('token');
+   }
 }
