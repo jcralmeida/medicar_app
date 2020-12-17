@@ -14,8 +14,8 @@ def validate_hour(request_dict: dict, now: str,
     :param now: the hour that the client is trying to set the appointment
     :type now: str
     """
-    valid_day = retrieved_schedule.dia < date_now
-    valid_hour = request_dict.get("horario") < now
+    valid_day = retrieved_schedule.dia > date_now
+    valid_hour = request_dict.get("horario") > now
 
     if not valid_day and not valid_hour:
         raise InvalidHours
