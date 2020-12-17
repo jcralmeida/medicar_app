@@ -11,7 +11,13 @@ export class LoginComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService, private route: Router) { }
+  showSpinner: boolean = false;
+
+  constructor(
+    private authService: AuthService,
+    private route: Router,
+
+    ) { }
 
   ngOnInit(): void {
   }
@@ -19,9 +25,13 @@ export class LoginComponent implements OnInit {
   onLogin(value) {
     this.authService.login(value).subscribe(
        data => {
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('token', data.token);
-        this.route.navigateByUrl('/list');
+        this.showSpinner = true;
+        setTimeout(() => {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('token', data.token);
+          this.showSpinner = false;
+          this.route.navigateByUrl('/list');
+        }, 1000);
       },
       error => {
         this.errorMessage = error.error.message;
