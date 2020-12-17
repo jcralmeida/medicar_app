@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-appointments',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListAppointmentsComponent implements OnInit {
 
-  constructor() { }
+   token: string;
+
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('token');
   }
 
+  logout(): void {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
+  }
 }
