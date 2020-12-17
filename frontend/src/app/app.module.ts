@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import {  HttpClientModule } from '@angular/common/http';
 import { ValidateEqualModule } from 'ng-validate-equal';
 import { ListAppointmentsComponent } from './list-appointments/list-appointments.component';
+import { SpinnerComponent } from './ui/spinner/spinner.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ListAppointmentsComponent } from './list-appointments/list-appointments
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ListAppointmentsComponent
+    ListAppointmentsComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
