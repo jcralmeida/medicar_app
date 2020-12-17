@@ -57,3 +57,68 @@
         </div>
       </div>
   </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nova Consulta</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #adicionarConsulta="ngForm">
+      <div class="form-group">
+        <select
+          id="especialidade"
+          class="form-control"
+          (change)="especialidadeChangeEvent($event)"
+        >
+          <option value="" hidden>Especialidade</option>
+          <option *ngFor="let especialidade of especialidadeList" [value]="especialidade.id">
+            {{especialidade.nome}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select
+          id="medico"
+          class="form-control"
+          (change)="medicoChangeEvent($event)"
+        >
+          <option value="" hidden>Medico</option>
+          <option *ngFor="let medico of medicosList" [value]="medico.id">
+            {{medico.nome}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select
+          id="dia"
+          class="form-control"
+          (change)="diaChangeEvent($event)"
+        >
+          <option value="" hidden>dia</option>
+          <option *ngFor="let agenda of agendaList" [value]="agenda.dia">
+            {{agenda.dia}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select
+          id="horario"
+          class="form-control"
+          (change)="horarioChangeEvent($event)"
+        >
+          <option value="" hidden>Hora</option>
+          <option *ngFor="let hora of horarioList">
+            {{hora}}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="createConsulta()">Save</button>
+  </div>
+</ng-template>
